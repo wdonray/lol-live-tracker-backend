@@ -12,6 +12,8 @@ custom:
 provider:
   name: aws
   runtime: nodejs10.x
+  region: us-east-1
+  stage: prod
 
 functions:
   getSummonerByName:
@@ -28,4 +30,16 @@ functions:
       - http:
           method: get
           path: getSummonerByName
-          cors: true
+          cors:       
+            origin: '*'
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            allowCredentials: true
+
+resources:
+  - ${file(resources/api-gateway-errors.yml)}
