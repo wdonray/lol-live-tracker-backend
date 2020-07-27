@@ -5,6 +5,7 @@ function buildResponse(statusCode, body) {
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Credentials": true,
     },
+    contentType: "application/json",
     body: JSON.stringify(body),
   };
 }

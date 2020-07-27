@@ -22,8 +22,6 @@ export const main = async (event: any = {}, _context) => {
       },
     });
 
-    console.log(response)
-
     if (response.status === 200) {
       return success(response.data);
     } else {
