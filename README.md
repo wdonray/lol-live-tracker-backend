@@ -2,5 +2,5 @@
   League of Legends live game and stat tracker
 </h1>
 <p align="center">
-  Front-end app
+  Back-end app
 </p>
