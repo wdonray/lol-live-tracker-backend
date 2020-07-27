@@ -1,0 +1,25 @@
+{
+  "name": "lol-live-tracker-backend",
+  "version": "2.2.0",
+  "description": "lol live tracker backend",
+  "main": "handler.js",
+  "scripts": {
+    "test": "serverless-bundle test"
+  },
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AnomalyInnovations/serverless-nodejs-starter.git"
+  },
+  "devDependencies": {
+    "serverless-bundle": "2.0.0",
+    "serverless-dotenv-plugin": "^2.1.1",
+    "serverless-offline": "^5.3.3",
+    "typescript": "^3.2.4",
+    "lodash": "^4.17.15",
+    "moment": "^2.26.0",
+    "axios": "^0.19.2"
+  },
+  "dependencies": {}
+}
