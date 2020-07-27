@@ -1,32 +1,31 @@
-# NOTE: update this with your service name
-service: lol-live-tracker-backend
-
-# Create an optimized package for our functions 
-package:
-  individually: true
+service:
+  name: lol-live-backend
 
 plugins:
-  - serverless-bundle # Package our functions with Webpack
-  - serverless-offline
-  - serverless-dotenv-plugin # Load .env as environment variables
+  - serverless-webpack
+  - serverless-iam-roles-per-function
+
+custom:
+  serverless-iam-roles-per-function:
+    defaultInherit: true
 
 provider:
   name: aws
   runtime: nodejs10.x
-  stage: dev
-  region: us-east-1
-  # To load environment variables externally
-  # rename env.example to .env and uncomment
-  # the following line. Also, make sure to not
-  # commit your .env.
-  #
-  #environment:
-  #  SAMPLE_ENV_VAR: ${env:SAMPLE_ENV_VAR}
 
 functions:
-  hello:
-    handler: handler.hello
+  getSummonerByName:
+    handler: services/getSummonerByName/handler.main
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - 'secretsmanager:GetResourcePolicy'
+          - 'secretsmanager:GetSecretValue'
+          - 'secretsmanager:DescribeSecret'
+          - 'secretsmanager:ListSecretVersionIds'
+        Resource: '*'
     events:
       - http:
-          path: hello
           method: get
+          path: getSummonerByName
+          cors: true
