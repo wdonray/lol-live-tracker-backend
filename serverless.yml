@@ -13,7 +13,7 @@ provider:
   name: aws
   runtime: nodejs10.x
   region: us-east-1
-  stage: prod
+  stage: dev
 
 functions:
   getSummonerByName:
@@ -28,18 +28,56 @@ functions:
         Resource: '*'
     events:
       - http:
-          method: get
+          method: post
           path: getSummonerByName
-          cors:       
-            origin: '*'
-            headers:
-              - Content-Type
-              - X-Amz-Date
-              - Authorization
-              - X-Api-Key
-              - X-Amz-Security-Token
-              - X-Amz-User-Agent
-            allowCredentials: true
+          cors: true
+  
+  getMatchHistory:
+    handler: services/getMatchHistory/handler.main
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - 'secretsmanager:GetResourcePolicy'
+          - 'secretsmanager:GetSecretValue'
+          - 'secretsmanager:DescribeSecret'
+          - 'secretsmanager:ListSecretVersionIds'
+        Resource: '*'
+    events:
+      - http:
+          method: post
+          path: getMatchHistory
+          cors: true
 
+  getActiveGame:
+    handler: services/getActiveGame/handler.main
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - 'secretsmanager:GetResourcePolicy'
+          - 'secretsmanager:GetSecretValue'
+          - 'secretsmanager:DescribeSecret'
+          - 'secretsmanager:ListSecretVersionIds'
+        Resource: '*'
+    events:
+      - http:
+          method: post
+          path: getActiveGame
+          cors: true
+
+  getSummonerStats:
+    handler: services/getSummonerStats/handler.main
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - 'secretsmanager:GetResourcePolicy'
+          - 'secretsmanager:GetSecretValue'
+          - 'secretsmanager:DescribeSecret'
+          - 'secretsmanager:ListSecretVersionIds'
+        Resource: '*'
+    events:
+      - http:
+          method: post
+          path: getSummonerStats
+          cors: true
 resources:
   - ${file(resources/api-gateway-errors.yml)}
