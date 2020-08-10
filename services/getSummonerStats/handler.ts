@@ -6,8 +6,8 @@ export const main = async (event: any = {}, _context) => {
   try {
     const { region, encryptedSummonerId } = JSON.parse(event.body);
 
-    if (!encryptedSummonerId) {
-      return failure({ error: "Must provide Encrypted Summoner Id" });
+    if (!region || !encryptedSummonerId) {
+      return failure({ error: "Must provide Encrypted Summoner Id and Region" });
     }
 
     const apiKey = await getRiotAPIKey();

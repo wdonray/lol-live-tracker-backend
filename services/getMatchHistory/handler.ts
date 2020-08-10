@@ -4,10 +4,10 @@ import { getRiotAPIKey } from "../../utils/secrets";
 
 export const main = async (event: any = {}, _context) => {
   try {
-    const { region, encryptedAccountId } = JSON.parse(event.body);
+    const { region, encryptedAccountId, count } = JSON.parse(event.body);
 
-    if (!encryptedAccountId) {
-      return failure({ error: "Must provide Encrypted Account Id" });
+    if (!region || !encryptedAccountId) {
+      return failure({ error: "Must provide Encrypted Account Id and Region" });
     }
 
     const apiKey = await getRiotAPIKey();
@@ -19,6 +19,7 @@ export const main = async (event: any = {}, _context) => {
     const response: AxiosResponse = await axios.get(url, {
       params: {
         api_key: apiKey,
+        endIndex: count ? count : 10,
       },
     });
 
