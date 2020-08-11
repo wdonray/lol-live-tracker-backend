@@ -5,11 +5,11 @@ import { AnyMxRecord } from "dns";
 
 export const main = async (event: any = {}, _context) => {
   try {
-    const { region, encryptedAccountId, endIndex } = JSON.parse(event.body);
+    const { region, encryptedAccountId, beginIndex, endIndex } = JSON.parse(event.body);
 
-    if (!region || !encryptedAccountId || !endIndex) {
+    if (!region || !encryptedAccountId || !endIndex || !beginIndex) {
       return failure({
-        error: "Must provide Encrypted Account Id, Region and End Index",
+        error: "Must provide Encrypted Account Id, Region, End Index and Begin Index",
       });
     }
 
@@ -23,6 +23,7 @@ export const main = async (event: any = {}, _context) => {
       params: {
         api_key: apiKey,
         endIndex: endIndex,
+        beginIndex: beginIndex
       },
     });
     const matches: Array<AnyMxRecord> = [];
